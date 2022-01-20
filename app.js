@@ -10,7 +10,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 require('dotenv').config();
 console.log(process.env.NODE_ENV);
-const { PORT = 3003 } = process.env; //PORT
+const { PORT = 3004 } = process.env; //PORT
 
 const CORS_WHITELIST = [
   'http://localhost:3000',
@@ -31,26 +31,24 @@ const CORS_WHITELIST = [
       'https://localhost:3000',
       'https://www.localhost:3000',
       'http://www.localhost:3000',
-      'http://boomtele.com',
-      'https://boomtele.com',
-      'https://www.boomtele.com',
-      'http://www.boomtele.com',
+      'http://wu-space.ru',
+      'https://wu-space.ru',
+      'https://www.wu-space.ru',
+      'http://www.wu-space.ru',
       ],
   };
   app.use('*', cors(corsOption));
   app.use(cookieParser());
-  mongoose.connect('mongodb://localhost:27017/boom', {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
+  // mongoose.connect('mongodb://localhost:27017/wu', {
+  //   useUnifiedTopology: true,
+  //   useNewUrlParser: true,
+  // });
   
   app.use(express.json());
   app.use(requestLogger);
   // app.use(cors(corsOption));
-  app.use('/api/order-tariff', require('./routes/orderTariff'));
-  app.use('/api/order-service', require('./routes/orderService'));
-  app.use('/api/transfer-number', require('./routes/trasferNumber'));
-  app.use('/api/buy-numbers', require('./routes/buyNumbers'));
+
+  app.use('/api/yaclients', require('./routes/yaclients'));
  
   // eslint-disable-next-line no-unused-vars
   app.use((req, res) => {
