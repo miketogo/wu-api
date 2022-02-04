@@ -37,12 +37,12 @@ module.exports.getTimeTable = (req, res, next) => {
   }
   fetchTimeTable()
     .then((data) => {
-      if(data.success){
+      if (data.success) {
         res.status(200).send({ data: data.data })
-      } else{
+      } else {
         throw new Error('Что то пошло не так');
       }
-      
+
       // console.log(data);
     })
     .catch((err) => {
@@ -68,12 +68,45 @@ module.exports.getServices = (req, res, next) => {
   }
   fetchTimeTable()
     .then((data) => {
-      if(data.success){
+      if (data.success) {
         res.status(200).send({ data: data.data })
-      } else{
+      } else {
         throw new Error('Что то пошло не так');
       }
-      
+
+      // console.log(data);
+    })
+    .catch((err) => {
+      throw new ConflictError('Что то пошло не так');
+    })
+    .catch(next)
+}
+
+
+module.exports.getStaff = (req, res, next) => {
+  let { staff_id } = req.body
+
+  async function fetchTimeTable() {
+
+    const response = await fetch(`https://api.yclients.com/api/v1/staff/652128/${staff_id}`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.yclients.v2+json',
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+    const data = await response.json();
+    return await data
+  }
+  fetchTimeTable()
+    .then((data) => {
+      if (data.success) {
+        res.status(200).send({ data: data.data })
+      } else {
+        throw new Error('Что то пошло не так');
+      }
+
       // console.log(data);
     })
     .catch((err) => {
